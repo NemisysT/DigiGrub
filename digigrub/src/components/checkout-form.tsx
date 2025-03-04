@@ -7,15 +7,34 @@ import { toast } from "sonner"
 import { useCart } from "@/components/providers/cart-provider"
 import { mockMenuItems } from "@/lib/mock-data"
 
-export function ItemDetail({ id }) {
-  const [item, setItem] = useState(null)
+interface ItemDetailProps {
+  id: number;
+}
+
+export function ItemDetail({ id }: ItemDetailProps) {
+  interface Item {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    available: boolean;
+    image: string;
+    nutritionalInfo: {
+      calories: number;
+      protein: number;
+      carbs: number;
+      fat: number;
+    };
+  }
+  
+  const [item, setItem] = useState<Item | null>(null)
   const [quantity, setQuantity] = useState(1)
   const [loading, setLoading] = useState(true)
   const { addToCart } = useCart()
 
   useEffect(() => {
     // In a real app, this would be an API call
-    const fetchedItem = mockMenuItems.find((item) => item.id === id)
+    const fetchedItem = mockMenuItems.find((item) => item.id === id.toString())
     setItem(fetchedItem || null)
     setLoading(false)
   }, [id])

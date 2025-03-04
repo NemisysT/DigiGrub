@@ -10,7 +10,7 @@ import { mockMenuItems } from "@/lib/mock-data"
 import { toast } from "sonner"
 
 export function RelatedItems() {
-  const [items, setItems] = useState([])
+  const [items, setItems] = useState<typeof mockMenuItems>([])
   const { addToCart } = useCart()
 
   useEffect(() => {
@@ -20,7 +20,16 @@ export function RelatedItems() {
     setItems(randomItems)
   }, [])
 
-  const handleAddToCart = (item) => {
+  interface MenuItem {
+    id: string
+    name: string
+    description: string
+    price: number
+    available: boolean
+    image?: string
+  }
+
+  const handleAddToCart = (item: MenuItem) => {
     addToCart(item)
     toast.success("Added to cart", {
       description: `${item.name} has been added to your cart.`,

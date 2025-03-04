@@ -7,15 +7,15 @@ import { toast } from "sonner"
 import { useCart } from "@/components/providers/cart-provider"
 import { mockMenuItems } from "@/lib/mock-data"
 
-export function ItemDetail({ id }) {
-  const [item, setItem] = useState(null)
+export function ItemDetail({ id }: { id: number }) {
+  const [item, setItem] = useState<null | typeof mockMenuItems[0]>(null)
   const [quantity, setQuantity] = useState(1)
   const [loading, setLoading] = useState(true)
   const { addToCart } = useCart()
 
   useEffect(() => {
     // In a real app, this would be an API call
-    const fetchedItem = mockMenuItems.find((item) => item.id === id)
+    const fetchedItem = mockMenuItems.find((item) => Number(item.id) === id)
     setItem(fetchedItem || null)
     setLoading(false)
   }, [id])

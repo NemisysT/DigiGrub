@@ -1,7 +1,7 @@
 import { MainNav } from "@/components/main-nav"
 import { MobileNav } from "@/components/mobile-nav"
 import { Button } from "@/components/ui/button"
-import { FeaturedItems } from "@/components/featured-items"
+import {ItemDetail} from "@/components/featured-items"
 import { CategoryCards } from "@/components/category-cards"
 import { Footer } from "@/components/footer"
 import Link from "next/link"
@@ -94,7 +94,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <FeaturedItems />
+            <ItemDetail id="some-id" />
           </div>
         </section>
         <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">

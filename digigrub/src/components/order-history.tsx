@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { mockOrders } from "@/lib/mock-data"
 
 export function OrderHistory() {
-  const [orders, setOrders] = useState([])
+  const [orders, setOrders] = useState<{ id: string; customer: string; date: string; total: number; status: string; items: { id: string; name: string; price: number; quantity: number; }[]; }[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -37,20 +37,36 @@ export function OrderHistory() {
     )
   }
 
-  const getStatusColor = (status) => {
+  interface OrderItem {
+    id: string;
+    name: string;
+    price: number;
+    quantity: number;
+  }
+
+  interface Order {
+    id: string;
+    customer: string;
+    date: string;
+    total: number;
+    status: string;
+    items: OrderItem[];
+  }
+
+  const getStatusColor = (status: string): string => {
     switch (status) {
       case "pending":
-        return "bg-yellow-500"
+        return "bg-yellow-500";
       case "processing":
-        return "bg-blue-500"
+        return "bg-blue-500";
       case "ready":
-        return "bg-green-500"
+        return "bg-green-500";
       case "completed":
-        return "bg-gray-500"
+        return "bg-gray-500";
       case "cancelled":
-        return "bg-red-500"
+        return "bg-red-500";
       default:
-        return "bg-gray-500"
+        return "bg-gray-500";
     }
   }
 

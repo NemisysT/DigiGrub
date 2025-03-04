@@ -7,8 +7,21 @@ import { toast } from "sonner"
 import { useCart } from "@/components/providers/cart-provider"
 import { mockMenuItems } from "@/lib/mock-data"
 
-export function ItemDetail({ id }) {
-  const [item, setItem] = useState(null)
+export function ItemDetail({ id }: { id: string }) {
+  const [item, setItem] = useState<{
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    available: boolean;
+    image: string;
+    nutritionalInfo: {
+      calories: number;
+      protein: number;
+      carbs: number;
+      fat: number;
+    };
+  } | null>(null)
   const [quantity, setQuantity] = useState(1)
   const [loading, setLoading] = useState(true)
   const { addToCart } = useCart()

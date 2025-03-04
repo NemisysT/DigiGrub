@@ -10,7 +10,7 @@ import { useCart } from "@/components/providers/cart-provider"
 import { mockMenuItems } from "@/lib/mock-data"
 
 export function MenuItems() {
-  const [items, setItems] = useState([])
+  const [items, setItems] = useState<typeof mockMenuItems>([])
   const { addToCart } = useCart()
 
   useEffect(() => {
@@ -18,7 +18,16 @@ export function MenuItems() {
     setItems(mockMenuItems)
   }, [])
 
-  const handleAddToCart = (item) => {
+  interface MenuItem {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    available: boolean;
+    image?: string;
+  }
+
+  const handleAddToCart = (item: MenuItem) => {
     addToCart(item)
     toast.success(`${item.name} has been added to your cart.`) // Using sonner's toast.success
   }

@@ -9,15 +9,20 @@ import { mockCategories } from "@/lib/mock-data"
 
 export function MenuFilters() {
   const [priceRange, setPriceRange] = useState([0, 20])
-  const [selectedCategories, setSelectedCategories] = useState([])
+  const [selectedCategories, setSelectedCategories] = useState<number[]>([])
 
-  const handleCategoryChange = (categoryId) => {
-    setSelectedCategories((prev) =>
+  interface Category {
+    id: number;
+    name: string;
+  }
+
+  const handleCategoryChange = (categoryId: number) => {
+    setSelectedCategories((prev: number[]) =>
       prev.includes(categoryId) ? prev.filter((id) => id !== categoryId) : [...prev, categoryId],
     )
   }
 
-  const handlePriceChange = (value) => {
+  const handlePriceChange = (value: number[]) => {
     setPriceRange(value)
   }
 
@@ -35,8 +40,8 @@ export function MenuFilters() {
             <div key={category.id} className="flex items-center space-x-2">
               <Checkbox
                 id={`category-${category.id}`}
-                checked={selectedCategories.includes(category.id)}
-                onCheckedChange={() => handleCategoryChange(category.id)}
+                checked={selectedCategories.includes(Number(category.id))}
+                onCheckedChange={() => handleCategoryChange(Number(category.id))}
               />
               <Label htmlFor={`category-${category.id}`} className="text-sm font-normal">
                 {category.name}
