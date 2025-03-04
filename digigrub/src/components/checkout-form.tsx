@@ -1,88 +1,122 @@
 "use client"
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useState, useEffect } from "react"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Textarea } from "@/components/ui/textarea"
-import { useToast } from "@/components/ui/use-toast"
+import { toast } from "sonner"
 import { useCart } from "@/components/providers/cart-provider"
+import { mockMenuItems } from "@/lib/mock-data"
 
-export function CheckoutForm() {
-  const router = useRouter()
-  const { clearCart } = useCart()
-  const { toast } = useToast()
-  const [loading, setLoading] = useState(false)
+export function ItemDetail({ id }) {
+  const [item, setItem] = useState(null)
+  const [quantity, setQuantity] = useState(1)
+  const [loading, setLoading] = useState(true)
+  const { addToCart } = useCart()
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
+  useEffect(() => {
+    // In a real app, this would be an API call
+    const fetchedItem = mockMenuItems.find((item) => item.id === id)
+    setItem(fetchedItem || null)
+    setLoading(false)
+  }, [id])
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+  const handleAddToCart = () => {
+    if (item) {
+      addToCart({
+        ...item,
+        quantity,
+      })
+      toast.success(`${quantity} x ${item.name} has been added to your cart.`)
+    }
+  }
 
-    toast({
-      title: "Order placed successfully!",
-      description: "Your order has been placed and will be ready for pickup soon.",
-    })
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    )
+  }
 
-    clearCart()
-    router.push("/orders")
+  if (!item) {
+    return (
+      <div className="text-center py-12">
+        <h2 className="text-2xl font-bold">Item not found</h2>
+        <p className="text-muted-foreground">The item you're looking for doesn't exist or has been removed.</p>
+      </div>
+    )
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Checkout Information</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor="first-name">First name</Label>
-                <Input id="first-name" required />
+    <div className="grid gap-6 lg:grid-cols-2">
+      <div className="relative aspect-square">
+        <Image
+          src={item.image || "/placeholder.svg?height=600&width=600"}
+          alt={item.name}
+          fill
+          className="object-cover rounded-lg"
+        />
+      </div>
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold">{item.name}</h1>
+          <p className="text-2xl font-semibold mt-2">${item.price.toFixed(2)}</p>
+          <div className="flex items-center mt-2">
+            {item.available ? (
+              <span className="text-sm text-green-500">In Stock</span>
+            ) : (
+              <span className="text-sm text-red-500">Out of Stock</span>
+            )}
+          </div>
+        </div>
+        <div>
+          <h2 className="text-lg font-semibold">Description</h2>
+          <p className="text-muted-foreground mt-2">{item.description}</p>
+        </div>
+        {item.nutritionalInfo && (
+          <div>
+            <h2 className="text-lg font-semibold">Nutritional Information</h2>
+            <div className="grid grid-cols-2 gap-2 mt-2">
+              <div>
+                <p className="text-sm text-muted-foreground">Calories</p>
+                <p className="font-medium">{item.nutritionalInfo.calories} kcal</p>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="last-name">Last name</Label>
-                <Input id="last-name" required />
+              <div>
+                <p className="text-sm text-muted-foreground">Protein</p>
+                <p className="font-medium">{item.nutritionalInfo.protein}g</p>
               </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" required />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="phone">Phone number</Label>
-              <Input id="phone" type="tel" required />
-            </div>
-            <div className="space-y-2">
-              <Label>Pickup time</Label>
-              <RadioGroup defaultValue="asap">
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="asap" id="asap" />
-                  <Label htmlFor="asap">As soon as possible</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="later" id="later" />
-                  <Label htmlFor="later">Schedule for later</Label>
-                </div>
-              </RadioGroup>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="notes">Special instructions</Label>
-              <Textarea id="notes" placeholder="Any special requests or dietary requirements?" />
+              <div>
+                <p className="text-sm text-muted-foreground">Carbs</p>
+                <p className="font-medium">{item.nutritionalInfo.carbs}g</p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Fat</p>
+                <p className="font-medium">{item.nutritionalInfo.fat}g</p>
+              </div>
             </div>
           </div>
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Processing..." : "Place Order"}
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+        )}
+        <div>
+          <h2 className="text-lg font-semibold">Quantity</h2>
+          <div className="flex items-center space-x-2 mt-2">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => setQuantity(Math.max(1, quantity - 1))}
+              disabled={!item.available}
+            >
+              -
+            </Button>
+            <span className="w-8 text-center">{quantity}</span>
+            <Button variant="outline" size="icon" onClick={() => setQuantity(quantity + 1)} disabled={!item.available}>
+              +
+            </Button>
+          </div>
+        </div>
+        <Button className="w-full" size="lg" onClick={handleAddToCart} disabled={!item.available}>
+          Add to Cart
+        </Button>
+      </div>
+    </div>
   )
 }
-

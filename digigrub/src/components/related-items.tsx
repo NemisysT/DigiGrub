@@ -5,14 +5,13 @@ import Link from "next/link"
 import Image from "next/image"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { useToast } from "@/components/ui/use-toast"
 import { useCart } from "@/components/providers/cart-provider"
 import { mockMenuItems } from "@/lib/mock-data"
+import { toast } from "sonner"
 
 export function RelatedItems() {
   const [items, setItems] = useState([])
   const { addToCart } = useCart()
-  const { toast } = useToast()
 
   useEffect(() => {
     // In a real app, this would be an API call with related items
@@ -23,8 +22,7 @@ export function RelatedItems() {
 
   const handleAddToCart = (item) => {
     addToCart(item)
-    toast({
-      title: "Added to cart",
+    toast.success("Added to cart", {
       description: `${item.name} has been added to your cart.`,
     })
   }
@@ -67,4 +65,3 @@ export function RelatedItems() {
     </div>
   )
 }
-

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { useToast } from "@/components/ui/use-toast"
+import { toast } from "sonner"
 import { useCart } from "@/components/providers/cart-provider"
 import { mockMenuItems } from "@/lib/mock-data"
 
@@ -12,7 +12,6 @@ export function ItemDetail({ id }) {
   const [quantity, setQuantity] = useState(1)
   const [loading, setLoading] = useState(true)
   const { addToCart } = useCart()
-  const { toast } = useToast()
 
   useEffect(() => {
     // In a real app, this would be an API call
@@ -27,10 +26,7 @@ export function ItemDetail({ id }) {
         ...item,
         quantity,
       })
-      toast({
-        title: "Added to cart",
-        description: `${quantity} x ${item.name} has been added to your cart.`,
-      })
+      toast.success(`${quantity} x ${item.name} has been added to your cart.`)
     }
   }
 
@@ -124,4 +120,3 @@ export function ItemDetail({ id }) {
     </div>
   )
 }
-

@@ -5,14 +5,13 @@ import Link from "next/link"
 import Image from "next/image"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { useToast } from "@/components/ui/use-toast"
+import { toast } from "sonner" // Replaced useToast with sonner
 import { useCart } from "@/components/providers/cart-provider"
 import { mockMenuItems } from "@/lib/mock-data"
 
 export function MenuItems() {
   const [items, setItems] = useState([])
   const { addToCart } = useCart()
-  const { toast } = useToast()
 
   useEffect(() => {
     // In a real app, this would be an API call with filters
@@ -21,10 +20,7 @@ export function MenuItems() {
 
   const handleAddToCart = (item) => {
     addToCart(item)
-    toast({
-      title: "Added to cart",
-      description: `${item.name} has been added to your cart.`,
-    })
+    toast.success(`${item.name} has been added to your cart.`) // Using sonner's toast.success
   }
 
   return (
@@ -65,4 +61,3 @@ export function MenuItems() {
     </div>
   )
 }
-
