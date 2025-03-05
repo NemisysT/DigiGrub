@@ -77,7 +77,7 @@ export default function Home() {
                   alt="Hero Image"
                   className="aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
                   height="550"
-                  src="/placeholder.svg?height=550&width=800"
+                  src="/images/canteen.jpeg?height=550&width=800"
                   width="800"
                 />
               </div>
