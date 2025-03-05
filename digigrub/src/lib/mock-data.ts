@@ -63,16 +63,16 @@ export const mockCategories = [
 export const mockMenuItems = [
   {
     id: "1",
-    name: "Cheese Burger",
-    description: "Juicy beef patty with cheese, lettuce, and tomato.",
-    price: 8.99,
+    name: "Burger",
+    description: "A delicious burger with cheese and lettuce.",
+    price: 5.99,
     available: true,
-    image: "/images/cheese-burger.jpg",
+    image: "/images/burger.jpg",
     nutritionalInfo: {
       calories: 500,
       protein: 25,
-      carbs: 40,
-      fat: 30,
+      carbs: 50,
+      fat: 20,
     },
   },
   {
