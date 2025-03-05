@@ -61,19 +61,19 @@ export function ItemDetail({ id }: { id: string }) {
   }
 
   return (
-    <div className="grid gap-8 lg:grid-cols-2">
+    <div className="grid gap-6 lg:grid-cols-2">
       <div className="relative aspect-square">
         <Image
           src={item.image || "/placeholder.svg?height=600&width=600"}
           alt={item.name}
           fill
-          className="object-cover rounded-lg shadow-lg"
+          className="object-cover rounded-lg"
         />
       </div>
-      <div className="space-y-8">
+      <div className="space-y-6">
         <div>
-          <h1 className="text-4xl font-bold">{item.name}</h1>
-          <p className="text-2xl font-semibold mt-2 text-primary">${item.price.toFixed(2)}</p>
+          <h1 className="text-3xl font-bold">{item.name}</h1>
+          <p className="text-2xl font-semibold mt-2">${item.price.toFixed(2)}</p>
           <div className="flex items-center mt-2">
             {item.available ? (
               <span className="text-sm text-green-500">In Stock</span>
@@ -89,7 +89,7 @@ export function ItemDetail({ id }: { id: string }) {
         {item.nutritionalInfo && (
           <div>
             <h2 className="text-lg font-semibold">Nutritional Information</h2>
-            <div className="grid grid-cols-2 gap-4 mt-2">
+            <div className="grid grid-cols-2 gap-2 mt-2">
               <div>
                 <p className="text-sm text-muted-foreground">Calories</p>
                 <p className="font-medium">{item.nutritionalInfo.calories} kcal</p>
@@ -111,7 +111,7 @@ export function ItemDetail({ id }: { id: string }) {
         )}
         <div>
           <h2 className="text-lg font-semibold">Quantity</h2>
-          <div className="flex items-center space-x-4 mt-2">
+          <div className="flex items-center space-x-2 mt-2">
             <Button
               variant="outline"
               size="icon"

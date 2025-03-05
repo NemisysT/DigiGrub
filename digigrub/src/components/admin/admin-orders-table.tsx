@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { toast } from "sonner"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -12,12 +13,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useToast } from "@/components/ui/use-toast"
 import { mockOrders } from "@/lib/mock-data"
 
 export function AdminOrdersTable() {
   const [orders, setOrders] = useState(mockOrders)
-  const { toast } = useToast()
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -39,8 +38,7 @@ export function AdminOrdersTable() {
   const updateOrderStatus = (orderId, newStatus) => {
     setOrders(orders.map((order) => (order.id === orderId ? { ...order, status: newStatus } : order)))
 
-    toast({
-      title: "Order status updated",
+    toast.success("Order status updated", {
       description: `Order #${orderId} has been marked as ${newStatus}.`,
     })
   }
@@ -97,7 +95,15 @@ export function AdminOrdersTable() {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuItem onClick={() => {}}>View details</DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => {
+                        toast.info("Viewing order details", {
+                          description: `Viewing details for Order #${order.id}`,
+                        })
+                      }}
+                    >
+                      View details
+                    </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "pending")}>
                       Mark as Pending

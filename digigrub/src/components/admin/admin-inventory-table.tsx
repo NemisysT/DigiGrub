@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { toast } from "sonner"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -13,12 +14,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useToast } from "@/components/ui/use-toast"
 import { mockInventory } from "@/lib/mock-data"
 
 export function AdminInventoryTable() {
   const [inventory, setInventory] = useState(mockInventory)
-  const { toast } = useToast()
 
   const getStockStatusColor = (item) => {
     if (item.quantity === 0) return "bg-red-500"
@@ -35,9 +34,10 @@ export function AdminInventoryTable() {
   const updateInventoryQuantity = (itemId, newQuantity) => {
     setInventory(inventory.map((item) => (item.id === itemId ? { ...item, quantity: newQuantity } : item)))
 
-    toast({
-      title: "Inventory updated",
-      description: `Item quantity has been updated.`,
+    const item = inventory.find((item) => item.id === itemId)
+
+    toast.success("Inventory updated", {
+      description: `${item?.name} quantity has been updated to ${newQuantity}.`,
     })
   }
 
@@ -100,12 +100,28 @@ export function AdminInventoryTable() {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuItem onClick={() => {}}>Edit item</DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => {
+                        toast.info("Editing item", {
+                          description: `Opening editor for ${item.name}`,
+                        })
+                      }}
+                    >
+                      Edit item
+                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => updateInventoryQuantity(item.id, item.quantity + 10)}>
                       Add 10 units
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => {}}>View history</DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => {
+                        toast.info("Viewing history", {
+                          description: `Viewing inventory history for ${item.name}`,
+                        })
+                      }}
+                    >
+                      View history
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>

@@ -9,16 +9,27 @@ export function AdminInventoryStatus() {
     .sort((a, b) => a.quantity - b.quantity)
     .slice(0, 5)
 
-  const getStockStatusColor = (item) => {
-    if (item.quantity === 0) return "bg-red-500"
-    if (item.quantity <= item.lowStockThreshold) return "bg-yellow-500"
-    return "bg-green-500"
+  interface InventoryItem {
+    id: string;
+    name: string;
+    quantity: number;
+    lowStockThreshold: number;
   }
 
-  const getStockStatusText = (item) => {
-    if (item.quantity === 0) return "Out of Stock"
-    if (item.quantity <= item.lowStockThreshold) return "Low Stock"
-    return "In Stock"
+  const getStockStatusColor = (item: InventoryItem): string => {
+    if (item.quantity === 0) return "bg-red-500";
+    if (item.quantity <= item.lowStockThreshold) return "bg-yellow-500";
+    return "bg-green-500";
+  }
+
+  interface StockStatusText {
+    (item: InventoryItem): string;
+  }
+
+  const getStockStatusText: StockStatusText = (item) => {
+    if (item.quantity === 0) return "Out of Stock";
+    if (item.quantity <= item.lowStockThreshold) return "Low Stock";
+    return "In Stock";
   }
 
   return (
