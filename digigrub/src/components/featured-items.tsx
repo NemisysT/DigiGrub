@@ -5,7 +5,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import { useCart } from "@/components/providers/cart-provider"
-import { mockMenuItems } from "@/lib/mock-data"
+import { mockFeaturedItems } from "@/lib/mock-data" // Updated import
 
 export function ItemDetail({ id }: { id: string }) {
   const [item, setItem] = useState<{
@@ -15,7 +15,7 @@ export function ItemDetail({ id }: { id: string }) {
     price: number;
     available: boolean;
     image: string;
-    nutritionalInfo: {
+    nutritionalInfo?: {
       calories: number;
       protein: number;
       carbs: number;
@@ -28,8 +28,8 @@ export function ItemDetail({ id }: { id: string }) {
 
   useEffect(() => {
     // In a real app, this would be an API call
-    const fetchedItem = mockMenuItems.find((item) => item.id === id)
-    setItem(fetchedItem || null)
+    const fetchedItem = mockFeaturedItems.find((item) => item.id === id) || null
+    setItem(fetchedItem ? { ...fetchedItem, nutritionalInfo: 'nutritionalInfo' in fetchedItem ? fetchedItem.nutritionalInfo as { calories: number; protein: number; carbs: number; fat: number; } : { calories: 0, protein: 0, carbs: 0, fat: 0 } } : null)
     setLoading(false)
   }, [id])
 
@@ -61,74 +61,77 @@ export function ItemDetail({ id }: { id: string }) {
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
-      <div className="relative aspect-square">
-        <Image
-          src={item.image || "/placeholder.svg?height=600&width=600"}
-          alt={item.name}
-          fill
-          className="object-cover rounded-lg"
-        />
-      </div>
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold">{item.name}</h1>
-          <p className="text-2xl font-semibold mt-2">${item.price.toFixed(2)}</p>
-          <div className="flex items-center mt-2">
-            {item.available ? (
-              <span className="text-sm text-green-500">In Stock</span>
-            ) : (
-              <span className="text-sm text-red-500">Out of Stock</span>
-            )}
-          </div>
+    <div>
+      <h1 className="text-3xl font-bold mb-8">Featured Items</h1>
+      <div className="grid gap-8 lg:grid-cols-2">
+        <div className="relative aspect-square">
+          <Image
+            src={item.image || "/placeholder.svg?height=600&width=600"}
+            alt={item.name}
+            fill
+            className="object-cover rounded-lg shadow-lg"
+          />
         </div>
-        <div>
-          <h2 className="text-lg font-semibold">Description</h2>
-          <p className="text-muted-foreground mt-2">{item.description}</p>
-        </div>
-        {item.nutritionalInfo && (
+        <div className="space-y-8">
           <div>
-            <h2 className="text-lg font-semibold">Nutritional Information</h2>
-            <div className="grid grid-cols-2 gap-2 mt-2">
-              <div>
-                <p className="text-sm text-muted-foreground">Calories</p>
-                <p className="font-medium">{item.nutritionalInfo.calories} kcal</p>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Protein</p>
-                <p className="font-medium">{item.nutritionalInfo.protein}g</p>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Carbs</p>
-                <p className="font-medium">{item.nutritionalInfo.carbs}g</p>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Fat</p>
-                <p className="font-medium">{item.nutritionalInfo.fat}g</p>
-              </div>
+            <h1 className="text-4xl font-bold">{item.name}</h1>
+            <p className="text-2xl font-semibold mt-2 text-primary">${item.price.toFixed(2)}</p>
+            <div className="flex items-center mt-2">
+              {item.available ? (
+                <span className="text-sm text-green-500">In Stock</span>
+              ) : (
+                <span className="text-sm text-red-500">Out of Stock</span>
+              )}
             </div>
           </div>
-        )}
-        <div>
-          <h2 className="text-lg font-semibold">Quantity</h2>
-          <div className="flex items-center space-x-2 mt-2">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              disabled={!item.available}
-            >
-              -
-            </Button>
-            <span className="w-8 text-center">{quantity}</span>
-            <Button variant="outline" size="icon" onClick={() => setQuantity(quantity + 1)} disabled={!item.available}>
-              +
-            </Button>
+          <div>
+            <h2 className="text-lg font-semibold">Description</h2>
+            <p className="text-muted-foreground mt-2">{item.description}</p>
           </div>
+          {item.nutritionalInfo && (
+            <div>
+              <h2 className="text-lg font-semibold">Nutritional Information</h2>
+              <div className="grid grid-cols-2 gap-4 mt-2">
+                <div>
+                  <p className="text-sm text-muted-foreground">Calories</p>
+                  <p className="font-medium">{item.nutritionalInfo.calories} kcal</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Protein</p>
+                  <p className="font-medium">{item.nutritionalInfo.protein}g</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Carbs</p>
+                  <p className="font-medium">{item.nutritionalInfo.carbs}g</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Fat</p>
+                  <p className="font-medium">{item.nutritionalInfo.fat}g</p>
+                </div>
+              </div>
+            </div>
+          )}
+          <div>
+            <h2 className="text-lg font-semibold">Quantity</h2>
+            <div className="flex items-center space-x-4 mt-2">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                disabled={!item.available}
+              >
+                -
+              </Button>
+              <span className="w-8 text-center">{quantity}</span>
+              <Button variant="outline" size="icon" onClick={() => setQuantity(quantity + 1)} disabled={!item.available}>
+                +
+              </Button>
+            </div>
+          </div>
+          <Button className="w-full" size="lg" onClick={handleAddToCart} disabled={!item.available}>
+            Add to Cart
+          </Button>
         </div>
-        <Button className="w-full" size="lg" onClick={handleAddToCart} disabled={!item.available}>
-          Add to Cart
-        </Button>
       </div>
     </div>
   )
