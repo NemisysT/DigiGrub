@@ -5,14 +5,7 @@ import { toast } from "sonner"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { Clock, CheckCircle2, XCircle, Loader2, AlertCircle, Eye } from 'lucide-react'
 import { mockOrders } from "@/lib/mock-data"
 
 export function AdminOrdersTable() {
@@ -36,10 +29,18 @@ export function AdminOrdersTable() {
   }
 
   const updateOrderStatus = (orderId, newStatus) => {
-    setOrders(orders.map((order) => (order.id === orderId ? { ...order, status: newStatus } : order)))
+    setOrders(orders.map(order => 
+      order.id === orderId ? { ...order, status: newStatus } : order
+    ))
 
     toast.success("Order status updated", {
       description: `Order #${orderId} has been marked as ${newStatus}.`,
+    })
+  }
+
+  const viewOrderDetails = (orderId) => {
+    toast.info("Viewing order details", {
+      description: `Viewing details for Order #${orderId}`
     })
   }
 
@@ -51,10 +52,9 @@ export function AdminOrdersTable() {
             <TableHead>Order ID</TableHead>
             <TableHead>Customer</TableHead>
             <TableHead>Date</TableHead>
-            <TableHead>Items</TableHead>
             <TableHead>Total</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -63,65 +63,75 @@ export function AdminOrdersTable() {
               <TableCell className="font-medium">#{order.id}</TableCell>
               <TableCell>{order.customer}</TableCell>
               <TableCell>{new Date(order.date).toLocaleString()}</TableCell>
-              <TableCell>{order.items.reduce((acc, item) => acc + item.quantity, 0)}</TableCell>
               <TableCell>${order.total.toFixed(2)}</TableCell>
               <TableCell>
                 <Badge className={getStatusColor(order.status)}>
                   {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                 </Badge>
               </TableCell>
-              <TableCell className="text-right">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="h-8 w-8 p-0">
-                      <span className="sr-only">Open menu</span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="h-4 w-4"
-                      >
-                        <circle cx="12" cy="12" r="1" />
-                        <circle cx="12" cy="5" r="1" />
-                        <circle cx="12" cy="19" r="1" />
-                      </svg>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuItem
-                      onClick={() => {
-                        toast.info("Viewing order details", {
-                          description: `Viewing details for Order #${order.id}`,
-                        })
-                      }}
-                    >
-                      View details
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "pending")}>
-                      Mark as Pending
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "processing")}>
-                      Mark as Processing
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "ready")}>
-                      Mark as Ready
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "completed")}>
-                      Mark as Completed
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "cancelled")}>
-                      Mark as Cancelled
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+              <TableCell>
+                <div className="flex flex-wrap items-center gap-1">
+                  <Button
+                    variant={order.status === "pending" ? "default" : "outline"}
+                    size="icon"
+                    className="h-7 w-7"
+                    onClick={() => updateOrderStatus(order.id, "pending")}
+                    title="Mark as Pending"
+                  >
+                    <Clock className="h-3.5 w-3.5" />
+                    <span className="sr-only">Pending</span>
+                  </Button>
+                  <Button
+                    variant={order.status === "processing" ? "default" : "outline"}
+                    size="icon"
+                    className="h-7 w-7"
+                    onClick={() => updateOrderStatus(order.id, "processing")}
+                    title="Mark as Processing"
+                  >
+                    <Loader2 className="h-3.5 w-3.5" />
+                    <span className="sr-only">Processing</span>
+                  </Button>
+                  <Button
+                    variant={order.status === "ready" ? "default" : "outline"}
+                    size="icon"
+                    className="h-7 w-7"
+                    onClick={() => updateOrderStatus(order.id, "ready")}
+                    title="Mark as Ready"
+                  >
+                    <AlertCircle className="h-3.5 w-3.5" />
+                    <span className="sr-only">Ready</span>
+                  </Button>
+                  <Button
+                    variant={order.status === "completed" ? "default" : "outline"}
+                    size="icon"
+                    className="h-7 w-7"
+                    onClick={() => updateOrderStatus(order.id, "completed")}
+                    title="Mark as Completed"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5" />
+                    <span className="sr-only">Completed</span>
+                  </Button>
+                  <Button
+                    variant={order.status === "cancelled" ? "default" : "outline"}
+                    size="icon"
+                    className="h-7 w-7"
+                    onClick={() => updateOrderStatus(order.id, "cancelled")}
+                    title="Mark as Cancelled"
+                  >
+                    <XCircle className="h-3.5 w-3.5" />
+                    <span className="sr-only">Cancelled</span>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-7 w-7 ml-1"
+                    onClick={() => viewOrderDetails(order.id)}
+                    title="View Details"
+                  >
+                    <Eye className="h-3.5 w-3.5" />
+                    <span className="sr-only">View</span>
+                  </Button>
+                </div>
               </TableCell>
             </TableRow>
           ))}
@@ -130,4 +140,3 @@ export function AdminOrdersTable() {
     </div>
   )
 }
-

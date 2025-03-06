@@ -6,14 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { Plus, Minus, Edit, History, RefreshCw } from "lucide-react"
 import { mockInventory } from "@/lib/mock-data"
 
 export function AdminInventoryTable() {
@@ -41,6 +34,24 @@ export function AdminInventoryTable() {
     })
   }
 
+  const handleEditItem = (item) => {
+    toast.info("Editing item", {
+      description: `Opening editor for ${item.name}`,
+    })
+  }
+
+  const handleViewHistory = (item) => {
+    toast.info("Viewing history", {
+      description: `Viewing inventory history for ${item.name}`,
+    })
+  }
+
+  const handleRefreshStock = (item) => {
+    toast.success("Stock refreshed", {
+      description: `${item.name} stock has been refreshed.`,
+    })
+  }
+
   return (
     <div className="rounded-md border">
       <Table>
@@ -49,81 +60,89 @@ export function AdminInventoryTable() {
             <TableHead>Item</TableHead>
             <TableHead>Category</TableHead>
             <TableHead>Quantity</TableHead>
-            <TableHead>Unit</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead>Last Updated</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {inventory.map((item) => (
             <TableRow key={item.id}>
               <TableCell className="font-medium">{item.name}</TableCell>
-              <TableCell>{item.category}</TableCell>
+              <TableCell>{item.category || "Ingredient"}</TableCell>
               <TableCell>
                 <div className="flex items-center space-x-2">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-7 w-7"
+                    onClick={() => updateInventoryQuantity(item.id, Math.max(0, item.quantity - 1))}
+                    title="Decrease Quantity"
+                  >
+                    <Minus className="h-3.5 w-3.5" />
+                  </Button>
                   <Input
                     type="number"
                     value={item.quantity}
-                    onChange={(e) => updateInventoryQuantity(item.id, Number.parseInt(e.target.value))}
+                    onChange={(e) => updateInventoryQuantity(item.id, Number.parseInt(e.target.value) || 0)}
                     className="h-8 w-16"
                   />
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-7 w-7"
+                    onClick={() => updateInventoryQuantity(item.id, item.quantity + 1)}
+                    title="Increase Quantity"
+                  >
+                    <Plus className="h-3.5 w-3.5" />
+                  </Button>
                 </div>
               </TableCell>
-              <TableCell>{item.unit}</TableCell>
               <TableCell>
                 <Badge className={getStockStatusColor(item)}>{getStockStatusText(item)}</Badge>
               </TableCell>
-              <TableCell>{new Date(item.lastUpdated).toLocaleDateString()}</TableCell>
-              <TableCell className="text-right">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="h-8 w-8 p-0">
-                      <span className="sr-only">Open menu</span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="h-4 w-4"
-                      >
-                        <circle cx="12" cy="12" r="1" />
-                        <circle cx="12" cy="5" r="1" />
-                        <circle cx="12" cy="19" r="1" />
-                      </svg>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuItem
-                      onClick={() => {
-                        toast.info("Editing item", {
-                          description: `Opening editor for ${item.name}`,
-                        })
-                      }}
-                    >
-                      Edit item
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => updateInventoryQuantity(item.id, item.quantity + 10)}>
-                      Add 10 units
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                      onClick={() => {
-                        toast.info("Viewing history", {
-                          description: `Viewing inventory history for ${item.name}`,
-                        })
-                      }}
-                    >
-                      View history
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+              <TableCell>
+                <div className="flex items-center space-x-2">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-7 w-7"
+                    onClick={() => handleEditItem(item)}
+                    title="Edit Item"
+                  >
+                    <Edit className="h-3.5 w-3.5" />
+                    <span className="sr-only">Edit</span>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-7 w-7"
+                    onClick={() => updateInventoryQuantity(item.id, item.quantity + 10)}
+                    title="Add 10 Units"
+                  >
+                    <span className="text-xs font-medium">+10</span>
+                    <span className="sr-only">Add 10</span>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-7 w-7"
+                    onClick={() => handleRefreshStock(item)}
+                    title="Refresh Stock"
+                  >
+                    <RefreshCw className="h-3.5 w-3.5" />
+                    <span className="sr-only">Refresh</span>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-7 w-7"
+                    onClick={() => handleViewHistory(item)}
+                    title="View History"
+                  >
+                    <History className="h-3.5 w-3.5" />
+                    <span className="sr-only">History</span>
+                  </Button>
+                </div>
               </TableCell>
             </TableRow>
           ))}

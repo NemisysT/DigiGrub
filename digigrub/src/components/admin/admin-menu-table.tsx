@@ -13,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Check, X, Clock, Edit, Trash2, DollarSign } from 'lucide-react'
 import { mockMenuItems } from "@/lib/mock-data"
 
 export function AdminMenuTable() {
@@ -50,6 +51,22 @@ export function AdminMenuTable() {
     )
   }
 
+  const handleEditItem = (item) => {
+    toast.info("Editing menu item", {
+      description: `Opening editor for ${item.name}`,
+    })
+  }
+
+  const handleDeleteItem = (item) => {
+    toast.error("Deleting item", {
+      description: `Are you sure you want to delete ${item.name}?`,
+      action: {
+        label: "Undo",
+        onClick: () => toast.success("Deletion cancelled"),
+      },
+    })
+  }
+
   return (
     <div className="rounded-md border">
       <Table>
@@ -58,9 +75,8 @@ export function AdminMenuTable() {
             <TableHead>Item</TableHead>
             <TableHead>Category</TableHead>
             <TableHead>Price</TableHead>
-            <TableHead>Available</TableHead>
-            <TableHead>Last Updated</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -70,63 +86,62 @@ export function AdminMenuTable() {
               <TableCell>{item.category || "Main"}</TableCell>
               <TableCell>${item.price.toFixed(2)}</TableCell>
               <TableCell>
-                <Switch checked={item.available} onCheckedChange={() => toggleItemAvailability(item.id)} />
+                <div className="flex items-center space-x-2">
+                  <Button
+                    variant={item.available ? "default" : "outline"}
+                    size="icon"
+                    className="h-7 w-7"
+                    onClick={() => toggleItemAvailability(item.id)}
+                    title="Available"
+                  >
+                    <Check className="h-3.5 w-3.5" />
+                    <span className="sr-only">Available</span>
+                  </Button>
+                  <Button
+                    variant={!item.available ? "default" : "outline"}
+                    size="icon"
+                    className="h-7 w-7"
+                    onClick={() => toggleItemAvailability(item.id)}
+                    title="Unavailable"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                    <span className="sr-only">Unavailable</span>
+                  </Button>
+                </div>
               </TableCell>
-              <TableCell>{new Date().toLocaleDateString()}</TableCell>
-              <TableCell className="text-right">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="h-8 w-8 p-0">
-                      <span className="sr-only">Open menu</span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="h-4 w-4"
-                      >
-                        <circle cx="12" cy="12" r="1" />
-                        <circle cx="12" cy="5" r="1" />
-                        <circle cx="12" cy="19" r="1" />
-                      </svg>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuItem
-                      onClick={() => {
-                        toast.info("Editing menu item", {
-                          description: `Opening editor for ${item.name}`,
-                        })
-                      }}
-                    >
-                      Edit item
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => updateItemPrice(item.id, item.price + 1)}>
-                      Increase price by $1
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                      onClick={() => {
-                        toast.error("Deleting item", {
-                          description: `Are you sure you want to delete ${item.name}?`,
-                          action: {
-                            label: "Undo",
-                            onClick: () => toast.success("Deletion cancelled"),
-                          },
-                        })
-                      }}
-                      className="text-red-600"
-                    >
-                      Delete item
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+              <TableCell>
+                <div className="flex items-center space-x-2">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-7 w-7"
+                    onClick={() => handleEditItem(item)}
+                    title="Edit Item"
+                  >
+                    <Edit className="h-3.5 w-3.5" />
+                    <span className="sr-only">Edit</span>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-7 w-7"
+                    onClick={() => updateItemPrice(item.id, item.price + 1)}
+                    title="Increase Price"
+                  >
+                    <DollarSign className="h-3.5 w-3.5" />
+                    <span className="sr-only">Increase Price</span>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-7 w-7 text-red-500 hover:bg-red-50 hover:text-red-600"
+                    onClick={() => handleDeleteItem(item)}
+                    title="Delete Item"
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                    <span className="sr-only">Delete</span>
+                  </Button>
+                </div>
               </TableCell>
             </TableRow>
           ))}
@@ -135,4 +150,3 @@ export function AdminMenuTable() {
     </div>
   )
 }
-
