@@ -253,7 +253,7 @@ export default function AboutPage() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <h3 className="text-xl font-bold">Alex Johnson</h3>
+                    <h3 className="text-xl font-bold">Mervin</h3>
                     <p className="text-muted-foreground">Founder & CEO</p>
                   </div>
                 </div>
@@ -267,7 +267,21 @@ export default function AboutPage() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <h3 className="text-xl font-bold">Samantha Lee</h3>
+                    <h3 className="text-xl font-bold">Anush</h3>
+                    <p className="text-muted-foreground">Founder & CEO</p>
+                  </div>
+                </div>
+                <div className="flex flex-col items-center space-y-4">
+                  <div className="relative h-40 w-40 overflow-hidden rounded-full">
+                    <Image
+                      src="/placeholder.svg?height=160&width=160"
+                      alt="Team member"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-bold">Raghava</h3>
                     <p className="text-muted-foreground">CTO</p>
                   </div>
                 </div>
@@ -281,7 +295,7 @@ export default function AboutPage() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <h3 className="text-xl font-bold">Michael Chen</h3>
+                    <h3 className="text-xl font-bold">Prateek </h3>
                     <p className="text-muted-foreground">Head of Operations</p>
                   </div>
                 </div>
