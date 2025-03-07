@@ -242,7 +242,7 @@ export default function AboutPage() {
                   Meet the passionate people behind DigiGrub
                 </p>
               </div>
-              <div className="mx-auto grid max-w-5xl gap-8 py-8 md:grid-cols-3">
+              <div className="mx-auto grid max-w-5xl gap-8 py-8 md:grid-cols-4">
                 <div className="flex flex-col items-center space-y-4">
                   <div className="relative h-40 w-40 overflow-hidden rounded-full">
                     <Image
