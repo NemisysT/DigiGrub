@@ -7,7 +7,11 @@ import { BarChart, ClipboardList, Home, Package, Settings, ShoppingCart, Users }
 export function AdminSidebar() {
   const pathname = usePathname()
 
-  const isActive = (path) => {
+  interface IsActive {
+    (path: string): boolean
+  }
+
+  const isActive: IsActive = (path) => {
     return pathname === path
   }
 
@@ -68,7 +72,7 @@ export function AdminSidebar() {
           <Link
             href="/admin/users"
             className={`flex items-center gap-3 rounded-lg px-3 py-2 ${
-              isActive("/admin/users")
+              isActive("#")
                 ? "bg-primary text-primary-foreground"
                 : "text-muted-foreground hover:bg-muted hover:text-foreground"
             } transition-all`}
@@ -77,7 +81,7 @@ export function AdminSidebar() {
             Users
           </Link>
           <Link
-            href="/admin/analytics"
+            href="#"
             className={`flex items-center gap-3 rounded-lg px-3 py-2 ${
               isActive("/admin/analytics")
                 ? "bg-primary text-primary-foreground"
@@ -88,7 +92,7 @@ export function AdminSidebar() {
             Analytics
           </Link>
           <Link
-            href="/admin/settings"
+            href="#"
             className={`flex items-center gap-3 rounded-lg px-3 py-2 ${
               isActive("/admin/settings")
                 ? "bg-primary text-primary-foreground"
@@ -101,7 +105,7 @@ export function AdminSidebar() {
         </nav>
       </div>
       <div className="mt-auto p-4">
-        <Link href="/">
+        <Link href="#">
           <div className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-foreground">
             <span className="text-sm font-medium">Exit Admin</span>
           </div>

@@ -15,7 +15,7 @@ export function RelatedItems() {
 
   useEffect(() => {
     // In a real app, this would be an API call with related items
-    // For now, just show 4 random items
+    // For now, random items are pulled from the mock data in lib>utils>mock-data.ts
     const randomItems = [...mockMenuItems].sort(() => 0.5 - Math.random()).slice(0, 4)
     setItems(randomItems)
   }, [])

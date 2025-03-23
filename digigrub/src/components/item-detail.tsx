@@ -55,8 +55,8 @@ export function ItemDetail({ id }: { id: number }) {
           alt={item.name}
           fill
           className="object-cover rounded-lg"
-        />
-      </div>
+        />  
+      </div> 
       <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold">{item.name}</h1>
