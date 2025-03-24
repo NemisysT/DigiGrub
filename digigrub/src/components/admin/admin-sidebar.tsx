@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 import {
   BarChart,
   ClipboardList,
@@ -11,13 +11,13 @@ import {
   ShoppingCart,
   Users,
   MessageSquare,
-} from "lucide-react"; // Import the correct icon
+} from "lucide-react"// Import the correct icon
 
 export function AdminSidebar() {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   const isActive = (path) => {
-    return pathname === path;
+    return pathname === path
   };
 
   return (
@@ -128,5 +128,5 @@ export function AdminSidebar() {
         </Link>
       </div>
     </div>
-  );
+  )
 }
