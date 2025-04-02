@@ -16,7 +16,7 @@ import {
 export function AdminSidebar() {
   const pathname = usePathname()
 
-  const isActive = (path) => {
+  const isActive = (path: string | null) => {
     return pathname === path
   };
 
