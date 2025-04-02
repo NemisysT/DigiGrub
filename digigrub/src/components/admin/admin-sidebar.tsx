@@ -2,7 +2,16 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BarChart, ClipboardList, Home, Package, Settings, ShoppingCart, Users } from "lucide-react"
+import {
+  BarChart,
+  ClipboardList,
+  Home,
+  Package,
+  Settings,
+  ShoppingCart,
+  Users,
+  MessageSquare,
+} from "lucide-react"// Import the correct icon
 
 export function AdminSidebar() {
   const pathname = usePathname()
@@ -13,7 +22,7 @@ export function AdminSidebar() {
 
   const isActive: IsActive = (path) => {
     return pathname === path
-  }
+  };
 
   return (
     <div className="flex h-full w-full flex-col border-r bg-muted/40">
@@ -114,4 +123,3 @@ export function AdminSidebar() {
     </div>
   )
 }
-
