@@ -1,18 +1,18 @@
-import { MainNav } from "@/components/main-nav"
-import { MobileNav } from "@/components/mobile-nav"
-import { Button } from "@/components/ui/button"
-import { Footer } from "@/components/footer"
-import { OrderHistory } from "@/components/order-history"
-import Link from "next/link"
+import { MainNav } from "@/components/main-nav";
+import { MobileNav } from "@/components/mobile-nav";
+import { Button } from "@/components/ui/button";
+import { Footer } from "@/components/footer";
+import { OrderHistory } from "@/components/order-history";
+import Link from "next/link";
 
 export default function OrdersPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center">
+        <div className="container mx-auto flex h-16 items-center px-4 md:px-6">
           <MainNav />
           <MobileNav />
-          <div className="flex flex-1 items-center justify-end space-x-4">
+          <div className="ml-auto flex items-center space-x-4">
             <nav className="flex items-center space-x-2">
               <Link href="/cart">
                 <Button variant="ghost" size="icon" aria-label="Cart">
@@ -47,13 +47,17 @@ export default function OrdersPage() {
         </div>
       </header>
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-start space-y-4">
-              <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Your Orders</h1>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl">Track and manage your orders</p>
-              </div>
+        <section className="w-full py-12 md:py-24 lg:py-32 px-4 md:px-6">
+          <div className="container mx-auto flex flex-col items-start space-y-6 text-center md:text-left">
+            <div className="space-y-2">
+              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                Your Orders
+              </h1>
+              <p className="max-w-[900px] text-muted-foreground md:text-xl">
+                Track and manage your orders
+              </p>
+            </div>
+            <div className="w-full overflow-x-auto">
               <OrderHistory />
             </div>
           </div>
@@ -61,6 +65,5 @@ export default function OrdersPage() {
       </main>
       <Footer />
     </div>
-  )
+  );
 }
-

@@ -49,6 +49,7 @@ export default function ContactPage() {
           </div>
         </div>
       </header>
+      <div className="flex flex-1 flex-col justify-center items-center text-center">
       <main className="flex-1">
         {/* Hero Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
@@ -212,30 +213,6 @@ export default function ContactPage() {
             </div>
           </div>
         </section>
-
-        {/* Map Section */}
-        {/* <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter">Find Us</h2>
-                <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">Visit our office on campus</p>
-              </div>
-              <div className="w-full overflow-hidden rounded-lg border bg-background shadow-sm">
-                <div className="aspect-[16/9] w-full">
-                  
-                  <div className="flex h-full w-full items-center justify-center bg-muted p-8">
-                    <p className="text-center text-muted-foreground">
-                      Interactive map would be displayed here.
-                      <br />
-                      For implementation, you can use Google Maps, Mapbox, or another mapping service.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section> */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
   <div className="container px-4 md:px-6">
     <div className="flex flex-col items-center justify-center space-y-4 text-center">
@@ -321,6 +298,7 @@ export default function ContactPage() {
           </div>
         </section>
       </main>
+      </div>
       <Footer />
     </div>
   )
