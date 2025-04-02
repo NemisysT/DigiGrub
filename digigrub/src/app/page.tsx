@@ -57,7 +57,7 @@ export default function Home() {
                     Order ahead, skip the line
                   </h1>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                    Pre-order your meals from the campus canteen and pick them up when they're ready. No more waiting in
+                    Pre-order your meals from the campus canteen and pick them up when they&apos;re ready. No more waiting in
                     line!
                   </p>
                 </div>
@@ -90,7 +90,7 @@ export default function Home() {
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Featured Items</h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Check out today's specials and most popular items
+                  Check out today&apos;s specials and most popular items
                 </p>
               </div>
             </div>
