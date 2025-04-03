@@ -60,7 +60,13 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">You might also like</h2>
               </div>
             </div>
-            <RelatedItems />
+            {/* Responsive grid with auto-fill and minmax */}
+            <div className="grid grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))] gap-4 w-full">
+            <div className="flex flex-col items-center justify-center text-center space-y-4">
+              <RelatedItems />
+              </div>
+              
+            </div>
           </div>
         </section>
       </main>
@@ -68,4 +74,3 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
     </div>
   )
 }
-

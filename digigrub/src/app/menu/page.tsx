@@ -12,7 +12,7 @@ export default function MenuPage() {
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center">
           <MainNav />
-          <MobileNav />
+          {/* <MobileNav /> */}
           <div className="flex flex-1 items-center justify-end space-x-4">
             <nav className="flex items-center space-x-2">
               <Link href="/cart">
@@ -57,12 +57,15 @@ export default function MenuPage() {
                   Browse our selection of delicious meals and snacks
                 </p>
               </div>
-              <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-4">
+              <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 <div className="sm:col-span-1">
                   <MenuFilters />
                 </div>
-                <div className="sm:col-span-3">
+                <div className="sm:col-span-2 md:col-span-3 lg:col-span-4">
+                  <div className="flex flex-col items-center justify-center text-center space-y-4">
                   <MenuItems />
+                  </div>
+                  
                 </div>
               </div>
             </div>
@@ -73,4 +76,3 @@ export default function MenuPage() {
     </div>
   )
 }
-

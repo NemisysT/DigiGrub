@@ -5,10 +5,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 export default function AdminMenuPage() {
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Menu Management</h1>
-        <div className="flex items-center gap-2">
+    <div className="flex flex-col gap-8 p-4 sm:p-6 lg:p-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Menu Management</h1>
+        <div className="flex flex-wrap items-center gap-2">
           <Button variant="outline" size="sm">
             Export
           </Button>
@@ -16,15 +16,15 @@ export default function AdminMenuPage() {
         </div>
       </div>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-2">
-          <Input className="w-[150px] sm:w-[250px]" placeholder="Search menu items..." />
+        <div className="flex flex-wrap items-center gap-2">
+          <Input className="w-full sm:w-[250px]" placeholder="Search menu items..." />
           <Button variant="outline" size="sm">
             Search
           </Button>
         </div>
-        <div className="flex flex-col gap-2 sm:flex-row">
+        <div className="flex flex-wrap gap-2">
           <Select defaultValue="all">
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full sm:w-[180px]">
               <SelectValue placeholder="Category" />
             </SelectTrigger>
             <SelectContent>
@@ -37,7 +37,7 @@ export default function AdminMenuPage() {
             </SelectContent>
           </Select>
           <Select defaultValue="all">
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full sm:w-[180px]">
               <SelectValue placeholder="Availability" />
             </SelectTrigger>
             <SelectContent>
