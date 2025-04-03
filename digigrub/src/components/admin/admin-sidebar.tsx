@@ -20,10 +20,9 @@ export function AdminSidebar() {
   const pathname = usePathname()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
-  const isActive = (path: string | null): boolean => {
-    return pathname === path;
-  }
-  
+  const isActive = (path: string | null) => {
+    return pathname === path
+  };
   return (
     <div className="lg:flex lg:h-screen lg:w-64 lg:flex-col lg:border-r lg:bg-muted/40">
       {/* Mobile Header */}
