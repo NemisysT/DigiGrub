@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "react-feather";
 
-export function MainNav() {
+export function MainNav({ className }: { className?: string }) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -27,7 +27,7 @@ export function MainNav() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8 ml-8">
+        <nav className={`hidden md:flex items-center space-x-8 ml-8 ${className}`}>
           {navLinks.map((link) => (
             <Link
               key={link.href}
