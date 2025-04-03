@@ -2,12 +2,31 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { Menu, X } from "react-feather";
+import { useState, useEffect, useRef } from "react";
+import { Menu } from "react-feather";
 
 export function MainNav({ className }: { className?: string }) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
 
   const navLinks = [
     { name: "Menu", href: "/menu" },
@@ -18,9 +37,19 @@ export function MainNav({ className }: { className?: string }) {
 
   return (
     <header className="bg-dark shadow-md">
-      <div className="container mx-auto px-0 py-4 flex justify-start items-center">
+      <div className="container mx-auto px-4 py-4 flex items-center">
+        {/* Mobile Menu Button - Aligned Left */}
+        <div className="md:hidden mr-4">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="text-light focus:outline-none"
+          >
+            <Menu size={28} />
+          </button>
+        </div>
+
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center space-x-2 pl-6">
+        <Link href="/" className="flex items-center space-x-2">
           <span className="font-bold text-2xl tracking-wide text-light hover:opacity-80 transition-opacity">
             DigiGrub
           </span>
@@ -43,35 +72,27 @@ export function MainNav({ className }: { className?: string }) {
             </Link>
           ))}
         </nav>
-
-        {/* Mobile Menu Button */}
-        <div className="md:hidden ml-auto">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="text-light focus:outline-none"
-          >
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-        </div>
       </div>
 
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden bg-dark shadow-md">
-          <nav className="flex flex-col items-start space-y-4 py-4 px-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-light transition-colors hover:text-accent text-lg"
-                onClick={() => setIsOpen(false)}
-              >
-                {link.name}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      )}
+      <div
+        ref={menuRef}
+        className={`fixed left-0 w-64 shadow-lg transform transition-transform duration-300 ${
+          isOpen ? "translate-x-0 top-16" : "-translate-x-full top-14"
+        } md:hidden bg-black/90 rounded-b-lg`}
+      >
+        <nav className="flex flex-col items-start space-y-6 py-6 px-6">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-light text-lg transition-colors hover:text-accent"
+              onClick={() => setIsOpen(false)}
+            >
+              {link.name}
+            </Link>
+          ))}
+        </nav>
+      </div>
     </header>
   );
 }
