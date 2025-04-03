@@ -18,16 +18,16 @@ export function MainNav() {
 
   return (
     <header className="bg-dark shadow-md">
-      <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+      <div className="container mx-auto px-0 py-4 flex justify-start items-center">
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center space-x-2">
+        <Link href="/" className="flex items-center space-x-2 pl-6">
           <span className="font-bold text-2xl tracking-wide text-light hover:opacity-80 transition-opacity">
             DigiGrub
           </span>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden md:flex items-center space-x-8 ml-8">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -45,7 +45,7 @@ export function MainNav() {
         </nav>
 
         {/* Mobile Menu Button */}
-        <div className="md:hidden">
+        <div className="md:hidden ml-auto">
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="text-light focus:outline-none"
@@ -58,7 +58,7 @@ export function MainNav() {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-dark shadow-md">
-          <nav className="flex flex-col items-center space-y-4 py-4">
+          <nav className="flex flex-col items-start space-y-4 py-4 px-6">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
