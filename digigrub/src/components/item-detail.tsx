@@ -32,7 +32,7 @@ export function ItemDetail({ id }: { id: number }) {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
+      <div className="flex items-center justify-center min-h-[400px] text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
       </div>
     )
@@ -42,13 +42,13 @@ export function ItemDetail({ id }: { id: number }) {
     return (
       <div className="text-center py-12">
         <h2 className="text-2xl font-bold">Item not found</h2>
-        <p className="text-muted-foreground">The item you're looking for doesn't exist or has been removed.</p>
+        <p className="text-muted-foreground">The item youre looking for doesnt exist or has been removed.</p>
       </div>
     )
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
+    <div className="grid gap-6 lg:grid-cols-2 sm:grid-cols-1 px-4 sm:px-6 w-full max-w-screen-lg mx-auto overflow-x-hidden">
       <div className="relative aspect-square">
         <Image
           src={item.image || "/placeholder.svg?height=600&width=600"}
@@ -59,8 +59,8 @@ export function ItemDetail({ id }: { id: number }) {
       </div> 
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold">{item.name}</h1>
-          <p className="text-2xl font-semibold mt-2">${item.price.toFixed(2)}</p>
+          <h1 className="text-2xl sm:text-3xl font-bold">{item.name}</h1>
+          <p className="text-xl sm:text-2xl font-semibold mt-2">${item.price.toFixed(2)}</p>
           <div className="flex items-center mt-2">
             {item.available ? (
               <span className="text-sm text-green-500">In Stock</span>
