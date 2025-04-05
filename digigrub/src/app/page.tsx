@@ -7,11 +7,13 @@ import { Footer } from "@/components/footer"
 import Link from "next/link"
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen text-center">
-      <div className="flex flex-col w-full">
+    <div className="flex flex-col items-center justify-center min-h-screen text-center bg-background">
+      <div className="flex flex-col w-full max-w-screen-xl mx-auto relative">
+        {/* Add a background color to the right side */}
+        <div className="absolute inset-0 bg-muted -z-10"></div>
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="container mx-auto flex h-16 items-center justify-between max-w-screen-xl px-4">
-            <MainNav  />
+          <div className="container mx-auto flex h-16 items-center justify-between px-2 md:px-4">
+            <MainNav />
             {/* <MobileNav className="hidden md:flex" /> */}
             <div className="flex flex-1 items-center justify-end space-x-4 flex-wrap">
               <nav className="flex items-center space-x-2">
@@ -45,20 +47,20 @@ export default function Home() {
             </div>
           </div>
         </header>
-        <main className="flex-1 flex flex-col items-center justify-center">
+        <main className="flex-1 flex flex-col items-center justify-center w-full">
           <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
             <div className="container mx-auto px-4 md:px-6 max-w-screen-xl">
               <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
                 <div className="flex flex-col justify-center space-y-4">
-                  <div className="space-y-2 text-center">
+                  <div className="space-y-2 text-center lg:text-left">
                     <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl">
                       Order ahead, skip the line
                     </h1>
-                    <p className="max-w-[600px] text-muted-foreground md:text-xl mx-auto">
+                    <p className="max-w-[600px] text-muted-foreground md:text-xl mx-auto lg:mx-0">
                       Pre-order your meals from the campus canteen and pick them up when they&apos;re ready. No more waiting in line!
                     </p>
                   </div>
-                  <div className="flex flex-wrap justify-center gap-2">
+                  <div className="flex flex-wrap justify-center lg:justify-start gap-2">
                     <Link href="/menu">
                       <Button size="lg">Browse Menu</Button>
                     </Link>
@@ -70,7 +72,7 @@ export default function Home() {
                 <div className="flex items-center justify-center">
                   <img
                     alt="Hero Image"
-                    className="aspect-video overflow-hidden rounded-xl object-contain sm:w-full"
+                    className="aspect-video overflow-hidden rounded-xl object-cover w-full"
                     height="550"
                     width="800"
                     src="/images/canteen.jpeg?height=550&width=800"
@@ -86,7 +88,10 @@ export default function Home() {
               <p className="max-w-[900px] text-muted-foreground md:text-xl mx-auto">
                 Check out today&apos;s specials and most popular items
               </p>
-              <ItemDetail id="some-id" />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <ItemDetail id="some-id" />
+                {/* Add more ItemDetail components or dynamic content here */}
+              </div>
             </div>
           </section>
           <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
@@ -95,7 +100,9 @@ export default function Home() {
               <p className="max-w-[900px] text-muted-foreground md:text-xl mx-auto">
                 Browse our menu by category
               </p>
-              <CategoryCards />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <CategoryCards />
+              </div>
             </div>
           </section>
         </main>

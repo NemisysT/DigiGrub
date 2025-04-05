@@ -5,7 +5,7 @@ import { mockCategories } from "@/lib/mock-data"
 
 export function CategoryCards() {
   return (
-    <div className="grid grid-cols-1 gap-6 pt-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div className="grid grid-cols-1 gap-6 pt-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 px-4 sm:px-6 text-center">
       {mockCategories.map((category) => (
         <Link key={category.id} href={`/menu?category=${category.id}`}>
           <Card className="overflow-hidden transition-all hover:shadow-md">
@@ -18,7 +18,7 @@ export function CategoryCards() {
               />
             </div>
             <CardContent className="p-4 text-center">
-              <h3 className="text-lg font-semibold">{category.name}</h3>
+              <h3 className="text-base sm:text-lg font-semibold">{category.name}</h3>
               <p className="text-sm text-muted-foreground">{category.itemCount} items</p>
             </CardContent>
           </Card>
