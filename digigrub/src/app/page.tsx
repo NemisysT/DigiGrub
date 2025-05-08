@@ -1,7 +1,7 @@
 import { MainNav } from "@/components/main-nav"
 // import { MobileNav } from "@/components/mobile-nav"
 import { Button } from "@/components/ui/button"
-import { ItemDetail } from "@/components/featured-items"
+import { ItemDetail} from "@/components/featured-items"
 import { CategoryCards } from "@/components/category-cards"
 import { Footer } from "@/components/footer"
 import Link from "next/link"
@@ -93,13 +93,8 @@ export default function Home() {
                 Check out today&apos;s specials and most popular items
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[
-                  { id: "item-1", name: "Pizza", description: "Delicious cheese pizza" },
-                  { id: "item-2", name: "Burger", description: "Juicy beef burger" },
-                  { id: "item-3", name: "Pasta", description: "Creamy Alfredo pasta" },
-                ].map((item) => (
-                  <ItemDetail key={item.id} {...item} />
-                ))}
+                <ItemDetail id="some-id" />
+                {/* Add more ItemDetail components or dynamic content here */}
               </div>
             </div>
           </section>
