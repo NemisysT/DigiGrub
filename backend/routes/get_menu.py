@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends , HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from supabase import Client
 from typing import List
 from models.schemas import MenuItem
@@ -23,7 +23,7 @@ async def get_menu(supabase: Client = Depends(get_supabase)):
         HTTPException: If database query fails.
     """
     try:
-        response = supabase.table("menu_items").select("*").eq("is_available", True).execute()
+        response = supabase.rpc("query", {"query": "select * from menu_items where is_available = true;"}).execute()
         return response.data
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch menu: {str(e)}")

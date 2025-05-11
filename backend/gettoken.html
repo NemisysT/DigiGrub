@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Get Supabase JWT</title>
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Correctly initialize the Supabase client
+    const supabase = window.supabase.createClient(
+      'https://fsrappbikxmibwicbvaf.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZzcmFwcGJpa3htaWJ3aWNidmFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY3MjkyODAsImV4cCI6MjA2MjMwNTI4MH0.pQbLwc1WsPiutKiUa2pHcz8ErCP8DW00SN0qzus14fE'
+    );
+
+    async function getToken() {
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: 'ccreator02@gmsil.com',
+          password: 'anush'
+        });
+        if (error) {
+          console.error('Error:', error.message);
+        } else {
+          console.log('JWT:', data.session.access_token);
+        }
+      } catch (err) {
+        console.error('Unexpected error:', err);
+      }
+    }
+
+    getToken();
+  </script>
+</body>
+</html>

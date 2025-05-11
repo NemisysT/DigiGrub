@@ -86,17 +86,8 @@ export default function Home() {
           </section>
 
           {/* Featured Items Section */}
-          <section className="w-full py-12 md:py-24 lg:py-32">
-            <div className="container mx-auto px-4 md:px-6 max-w-screen-xl text-center">
-              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Featured Items</h2>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl mx-auto">
-                Check out today&apos;s specials and most popular items
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <ItemDetail id="some-id" />
-                {/* Add more ItemDetail components or dynamic content here */}
-              </div>
-            </div>
+          <section className="w-100 py-12 md:py-24 lg:py-32">
+       
           </section>
 
           {/* Categories Section */}
